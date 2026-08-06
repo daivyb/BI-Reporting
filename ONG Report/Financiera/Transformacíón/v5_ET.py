@@ -154,6 +154,26 @@ pog_acumulado = {
     "187"
 }
 
+
+# =========================================================
+# ESTADO DEL PROYECTO
+# =========================================================
+
+anio_actual = df_finanzas["FI_NUM_ANNO"].max()
+
+proyectos_activos = (
+    df_finanzas[
+        (df_finanzas["FI_NUM_ANNO"] == anio_actual)
+        &
+        (df_finanzas["FN_IMP_PRAN"] > 0)
+    ]["FS_COD_PART"]
+    .astype(str)
+    .str.strip()
+    .str.extract(r"(\d+)")[0]
+    .str.zfill(3)
+    .unique()
+)
+
 # =========================================================
 # 4. DIM PROYECTO
 # =========================================================
@@ -173,11 +193,6 @@ dim_proyecto["CodigoProyecto"] = (
     .str.zfill(3)
 )
 
-codigos_con_analisis = (
-    set(map_pog.keys())
-    .union(pog_acumulado)
-)
-
 # =========================================================
 # TIPO POG
 # =========================================================
@@ -191,13 +206,13 @@ dim_proyecto["TipoPOG"] = np.select(
         "Acumulado",
         "Fijo"
     ],
-    default="Sin POG"
+    default="Sin POG Conocido"
 )
 
-dim_proyecto["EstadoPOG"] = np.where(
-    dim_proyecto["CodigoProyecto"].isin(codigos_con_analisis),
-    "Con Análisis",
-    "Sin Análisis"
+dim_proyecto["EstadoProyecto"] = np.where(
+    dim_proyecto["CodigoProyecto"].isin(proyectos_activos),
+    "En ejecución",
+    "Cerrado"
 )
 
 # =========================================================
@@ -370,7 +385,7 @@ dim_proyecto = dim_proyecto[
     [
         "CodigoProyecto",
         "Proyecto",
-        "EstadoPOG",
+        "EstadoProyecto",
         "TipoPOG",
         "TipoResponsabilidad",
         "AreaTematica",
