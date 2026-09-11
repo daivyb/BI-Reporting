@@ -4,7 +4,7 @@ This repository contains the data architecture and ETL scripts used to build a c
 
 This project solves the challenge of integrating data from two disparate systems with different granularities into a unified Kimball Star Schema, enabling executive decision-making through Power BI.
 
-## 📌 Project Overview
+## Project Overview
 
 **The Challenge:**
 - **Financial Data (EMMA):** Handled budgets and expenditures. The granularity was mixed across administrative levels (Executing Units) and technical levels (Project > Component > Subcomponent).
