@@ -16,7 +16,7 @@ To allow cross-filtering and joint analysis without duplicating data or creating
 2. **Star Schema:** Created a central `Dim_Tecnica` dimension that serves as the backbone connecting the Financial Fact Table (`Fact_Ejecucion`) and the Physical Fact Table (`Fact_Avance_Fisico`).
 3. **Advanced DAX:** Since the physical progress is only recorded at the Task level, complex DAX `AVERAGEX` iterators were developed to dynamically roll up the progress across the hierarchical levels in Power BI matrix visuals.
 
-## 📁 Repository Structure
+## Repository Structure
 
 - `etl_star_schema.py`: The core Python script using `pandas` and `pyxlsb` to extract, transform, and load the data into the Star Schema Excel output.
 - `DAX_Measures.md`: Documentation of the complex DAX formulas used in the Power BI model to calculate hierarchical averages, cumulative S-curves, and financial/physical gaps.
@@ -24,11 +24,11 @@ To allow cross-filtering and joint analysis without duplicating data or creating
 
 *(Note: Raw corporate data, full outputs, and the frontend React POC have been excluded from this repository for confidentiality).*
 
-## 🛠️ Tech Stack
+## Tech Stack
 - **Data Engineering:** Python, Pandas, OpenPyXL, PyXLSB.
 - **Data Modeling:** Kimball Methodology (Star Schema), Snowflake concepts.
 - **Business Intelligence:** Power BI, Advanced DAX (Context Transition, Nested Iterators, Auto-Exist optimization).
 
-## 💡 Key Highlights
+## Key Highlights
 - **S-Curve Generation:** Solved the DAX "Sum over time, Average over hierarchy" problem to accurately plot planned goals vs. actual progress.
 - **Handling Sparse Data:** Implemented DAX protections against Cartesian products that caused "phantom" components to appear at 100% gap when using multi-table hierarchies.
